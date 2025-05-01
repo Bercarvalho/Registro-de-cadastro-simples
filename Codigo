@@ -1,0 +1,79 @@
+import java.util.*;
+
+public class Main {
+    private static Set<String> perfisCadastrados = new HashSet<>();
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n====Escolha uma opção====");
+            System.out.println("1 - Cadastro de usuário");
+            System.out.println("2 - Verificar usuário");
+            System.out.println("0 - Sair");
+            System.out.println("=========================");
+            System.out.print("Opção: ");
+
+            int escolha = entrada.nextInt();
+            entrada.nextLine();
+
+            switch (escolha) {
+                case 1:
+                    CadastrarUsuario(entrada);
+                    break;
+                case 2:
+                    VerificarExistencia(entrada);
+                    break;
+                case 0:
+                    System.out.println("Encerrando programa...");
+                    entrada.close();
+                    return;
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        }
+    }
+
+    public static void CadastrarUsuario(Scanner scanner) {
+        System.out.print("Digite seu nome: ");
+        String nome = scanner.nextLine();
+
+        if (!nome.matches("[a-zA-Z ]+")) {
+            System.out.println("Nome inválido!");
+            return;
+        }
+
+        System.out.print("Digite sua senha: ");
+        String senha = scanner.nextLine();
+
+        if (!senha.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).+$")) {
+            System.out.println("Senha inválida!");
+            return;
+        }
+
+        String perfil = nome + "|" + senha;
+
+        if (perfisCadastrados.contains(perfil)) {
+            System.out.println("Perfil já existe!");
+        } else {
+            perfisCadastrados.add(perfil);
+            System.out.println("Perfil cadastrado com sucesso!");
+        }
+    }
+
+    public static void VerificarExistencia(Scanner scanner) {
+        System.out.print("Digite seu nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Digite sua senha: ");
+        String senha = scanner.nextLine();
+
+        String perfil = nome + "|" + senha;
+
+        if (perfisCadastrados.contains(perfil)) {
+            System.out.println("Perfil existente!");
+        } else {
+            System.out.println("Perfil não existente!");
+        }
+    }
+}
